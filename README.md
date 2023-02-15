@@ -14,4 +14,6 @@ pip install -r requirements.txt
 - Parse all advertisements around the country or single city.
 - Analysis price for country, region, city, district.
 - Analysis by any of proposed criterion: rooms, walls, repair, heating, square, floor.
-
+![](example_plot/output1.png)
+![](example_plot/output2.png)
+![](example_plot/output3.png)
