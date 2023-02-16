@@ -1,10 +1,12 @@
 import locale
 from datetime import datetime
 import pandas as pd
+import requests
 
 
 def convert_date(date: str) -> datetime.date:
     locale.setlocale(locale.LC_ALL, "uk_UA.UTF-8")
+
     today = "Сьогодні"
     if today in date:
         return datetime.now().date()
@@ -14,12 +16,13 @@ def convert_date(date: str) -> datetime.date:
 def convert_price(price: list[str]) -> int:
     usd = "$"
     euro = "€"
-    usd_rate = 38
-    euro_rate = 40
+    url = 'https://api.exchangerate.host/latest'
+    response = requests.get(url, params={"base": "UAH", "symbols": "USD,EUR"})
+    data = response.json()
     if usd in price:
-        return int(price[0]) * usd_rate
+        return int(price[0]) / data["rates"]["USD"]
     elif euro in price:
-        return int(price[0]) * euro_rate
+        return int(price[0]) / data["rates"]["EUR"]
 
     return int(price[0].replace(" ", ""))
 
@@ -43,3 +46,4 @@ def create_df(
         }
     )
     return data_frame
+
